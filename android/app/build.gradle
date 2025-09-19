@@ -1,8 +1,13 @@
 plugins {
     id "com.android.application"
-    id "kotlin-android"
+    id "org.jetbrains.kotlin.android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
+}
+
+// Align Kotlin to Java 21 toolchain to match Java compile options
+kotlin {
+    jvmToolchain(21)
 }
 
 def localProperties = new Properties()
@@ -27,18 +32,23 @@ android {
     namespace = "com.zamio.project.zamio"
 
     // ✅ Explicitly set compileSdk and targetSdk here instead of relying on flutter.* values
-    compileSdk = 34  // ✅ change from 35 to 34 for stability (unless you need 35)
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    // Ensure Kotlin JVM target matches Java
+    kotlinOptions {
+        jvmTarget = '21'
     }
 
     defaultConfig {
         applicationId = "com.zamio.project.zamio"
         minSdk = 24            // ✅ required by flutter_sound
-        targetSdk = 34         // ✅ match compileSdk version
+        targetSdk = 35         // match compileSdk version
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
     }

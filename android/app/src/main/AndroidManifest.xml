@@ -1,8 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:label="zamio"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- Foreground service notification channel config (for flutter_foreground_task) -->
+        <meta-data android:name="com.pravera.flutter_foreground_task.notification_channel_id" android:value="zamio_recorder"/>
+        <meta-data android:name="com.pravera.flutter_foreground_task.notification_channel_name" android:value="ZamIO Recording"/>
+        <meta-data android:name="com.pravera.flutter_foreground_task.notification_channel_description" android:value="Background audio capture in progress"/>
+
+        <service
+            android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
+            android:exported="false"
+            android:stopWithTask="false"
+            android:foregroundServiceType="microphone" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
